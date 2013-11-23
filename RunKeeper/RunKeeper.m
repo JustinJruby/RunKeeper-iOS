@@ -290,7 +290,7 @@ NSString *const kRunKeeperNewPointNotification = @"RunKeeperNewPointNotification
     
     NSMutableDictionary *activityDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                [RunKeeper activityString:activity], @"type",
-                                               [start proxyForJson], @"start_time",
+                                               [self proxyDateForJson:start], @"start_time",
                                                distance, @"total_distance",
                                                duration, @"duration",
                                                nil];
@@ -543,6 +543,15 @@ NSString *const kRunKeeperNewPointNotification = @"RunKeeperNewPointNotification
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (id)proxyDateForJson:(NSDate *)date{
+    time_t time = [date timeIntervalSince1970];
+    struct tm timeStruct;
+    localtime_r(&time, &timeStruct);
+    char buffer[80];
+    strftime(buffer, 80, "%a, %d %b %Y %H:%M:%S", &timeStruct);
+    return [NSString stringWithCString:buffer encoding:NSASCIIStringEncoding];
 }
 
 @end
