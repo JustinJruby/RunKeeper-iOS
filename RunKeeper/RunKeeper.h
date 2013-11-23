@@ -140,6 +140,7 @@ the success block */
 - (void)getFitnessActivitySummary:(NSString*)uri
                           success:(RIFitnessActivityCompletionBlock)success
                            failed:(RIBasicFailedBlock)failed;
+- (id)proxyDateForJson:(NSDate*)date;
 
 @end
 
